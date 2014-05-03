@@ -24,6 +24,7 @@
   </div>
   <% end %>
   <ul>
+  <li><%=l(:field_aclevel)%>: <%=h @project.aclevel %></li>
   <% unless @project.homepage.blank? %>
     <li><%=l(:field_homepage)%>: <%= link_to h(@project.homepage), @project.homepage %></li>
   <% end %>

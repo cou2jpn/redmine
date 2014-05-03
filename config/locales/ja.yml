@@ -344,6 +344,7 @@ ja:
   field_root_directory: ルートディレクトリ
   field_cvsroot: CVSROOT
   field_cvs_module: モジュール
+  field_aclevel: アクセスレベル
 
   setting_app_title: アプリケーションのタイトル
   setting_app_subtitle: アプリケーションのサブタイトル
@@ -403,6 +404,8 @@ ja:
   setting_commit_logtime_activity_id: 作業時間の作業分類
   setting_gantt_items_limit: ガントチャート最大表示項目数
   setting_default_projects_tracker_ids: 新規プロジェクトにおいてデフォルトで有効になるトラッカー
+  setting_deny_nonprivs_access_public_project: アクセスレベルの低いユーザーが非メンバーの公開プロジェクトへアクセスできないようにする
+  setting_allow_privs_access_secret_project: アクセスレベルの高いユーザーが非メンバーの非公開プロジェクトへアクセスできるようにする
 
   permission_add_project: プロジェクトの追加
   permission_add_subprojects: サブプロジェクトの追加

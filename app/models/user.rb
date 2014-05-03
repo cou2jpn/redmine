@@ -108,6 +108,8 @@ class User < Principal
   validates_confirmation_of :password, :allow_nil => true
   validates_inclusion_of :mail_notification, :in => MAIL_NOTIFICATION_OPTIONS.collect(&:first), :allow_blank => true
   validate :validate_password_length
+  validates_length_of :aclevel, :maximum => 1
+  validates_numericality_of :aclevel, :only_integer => true
 
   before_create :set_mail_notification
   before_save   :generate_password_if_needed, :update_hashed_password
@@ -538,7 +540,9 @@ class User < Principal
       roles = roles_for_project(context)
       return false unless roles
       roles.any? {|role|
-        (context.is_public? || role.member?) &&
+        (role.member? ||
+          (!Setting.deny_nonprivs_access_public_project? && context.is_public?) ||
+          (Setting.allow_privs_access_secret_project? && context.level_permited?(self))) &&
         role.allowed_to?(action) &&
         (block_given? ? yield(role, self) : true)
       }
@@ -592,6 +596,7 @@ class User < Principal
     'auth_source_id',
     'generate_password',
     'must_change_passwd',
+    'aclevel',
     :if => lambda {|user, current_user| current_user.admin?}
 
   safe_attributes 'group_ids',

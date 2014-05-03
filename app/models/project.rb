@@ -78,6 +78,8 @@ class Project < ActiveRecord::Base
   validates_format_of :identifier, :with => /\A(?!\d+$)[a-z0-9\-_]*\z/, :if => Proc.new { |p| p.identifier_changed? }
   # reserved words
   validates_exclusion_of :identifier, :in => %w( new )
+  validates_length_of :aclevel, :maximum => 1
+  validates_numericality_of :aclevel, :only_integer => true
 
   after_save :update_position_under_parent, :if => Proc.new {|project| project.name_changed?}
   after_save :update_inherited_members, :if => Proc.new {|project| project.inherit_members_changed?}
@@ -189,6 +191,13 @@ class Project < ActiveRecord::Base
         role = user.builtin_role
         if role.allowed_to?(permission)
           statement_by_role[role] = "#{Project.table_name}.is_public = #{connection.quoted_true}"
+          if Setting.deny_nonprivs_access_public_project?
+              statement_by_role[role] += " AND #{Project.table_name}.aclevel <= #{user.aclevel}"
+          end
+          projects = self.find(:all, :conditions => ["is_public = #{connection.quoted_false} AND aclevel <= ?", [user.aclevel]])
+          if projects.any? && Setting.allow_privs_access_secret_project?
+            statement_by_role[role] += " OR #{Project.table_name}.id IN (#{projects.collect(&:id).join(',')})"
+          end
         end
       end
       if user.logged?
@@ -211,6 +220,10 @@ class Project < ActiveRecord::Base
         "((#{base_statement}) AND (#{statement_by_role.values.join(' OR ')}))"
       end
     end
+  end
+
+  def level_permited?(user)
+    self.aclevel <= user.aclevel
   end
 
   def principals
@@ -672,6 +685,7 @@ class Project < ActiveRecord::Base
     'description',
     'homepage',
     'is_public',
+    'aclevel',
     'identifier',
     'custom_field_values',
     'custom_fields',

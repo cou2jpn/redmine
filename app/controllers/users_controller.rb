@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 
   def index
     sort_init 'login', 'asc'
-    sort_update %w(login firstname lastname mail admin created_on last_login_on)
+    sort_update %w(login firstname lastname mail admin aclevel created_on last_login_on)
 
     case params[:format]
     when 'xml', 'json'

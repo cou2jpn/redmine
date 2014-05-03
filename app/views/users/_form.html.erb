@@ -21,6 +21,7 @@
   <% end %>
 
   <p><%= f.check_box :admin, :disabled => (@user == User.current) %></p>
+  <p><%= f.text_field :aclevel, :required => true, :size => "1" %></p>
   <%= call_hook(:view_users_form, :user => @user, :form => f) %>
 </fieldset>
 

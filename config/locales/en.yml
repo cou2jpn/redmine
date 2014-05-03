@@ -337,6 +337,7 @@ en:
   field_inherit_members: Inherit members
   field_generate_password: Generate password
   field_must_change_passwd: Must change password at next logon
+  field_aclevel: Access level
 
   setting_app_title: Application title
   setting_app_subtitle: Application subtitle
@@ -410,6 +411,8 @@ en:
   setting_mail_handler_excluded_filenames: Exclude attachments by name
   setting_force_default_language_for_anonymous: Force default language for anonymous users
   setting_force_default_language_for_loggedin: Force default language for logged-in users
+  setting_deny_nonprivs_access_public_project: A user with a low access level is prevented from accessing to a non-member public project
+  setting_allow_privs_access_secret_project: A user with a high access level enables to access to a non-member secret project
 
   permission_add_project: Create project
   permission_add_subprojects: Create subprojects
