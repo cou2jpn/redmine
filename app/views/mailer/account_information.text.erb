@@ -1,6 +1,12 @@
-<% if @user.auth_source %><%= l(:mail_body_account_information_external, @user.auth_source.name) %>
-<% else %><%= l(:mail_body_account_information) %>:
+<%= l(:mail_subject_register, Setting.app_title) %>
+
+<%= l(:mail_body_account_information_external, @user.auth_source.name) if @user.auth_source%>
+
+<%= l(:mail_body_account_information) %>:
+* <%= l(:field_url) %>: <%= @login_url %>
 * <%= l(:field_login) %>: <%= @user.login %>
-* <%= l(:field_password) %>: <%= @password %>
-<% end %>
-<%= l(:label_login) %>: <%= @login_url %>
+* <%= l(:field_name) %>: <%= @user.name %>
+* <%= l(:field_dept) %>: <%= @user.dept %>
+* <%= l(:field_aclevel) %>: <%= @user.aclevel %>
+
+<%= Setting.account_reg_info.to_s %>

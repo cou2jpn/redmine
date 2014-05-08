@@ -1,11 +1,15 @@
+<%= l(:mail_subject_register, Setting.app_title) %>
+
 <% if @user.auth_source %>
 <p><%= l(:mail_body_account_information_external, h(@user.auth_source.name)) %></p>
-<% else %>
+<% end %>
 <p><%= l(:mail_body_account_information) %>:</p>
 <ul>
-    <li><%= l(:field_login) %>: <%=h @user.login %></li>
-    <li><%= l(:field_password) %>: <%=h @password %></li>
+<li><%= l(:field_url) %>: <%= link_to h(@login_url), @login_url %></li>
+<li><%= l(:field_login) %>: <%=h @user.login %></li>
+<li><%= l(:field_name) %>: <%=h @user.name %></li>
+<li><%= l(:field_dept) %>: <%=h @user.dept %></li>
+<li><%= l(:field_aclevel) %>: <%=h @user.aclevel %></li>
 </ul>
-<% end %>
 
-<p><%= l(:label_login) %>: <%= link_to h(@login_url), @login_url %></p>
+<%= textilizable(Setting.account_reg_info) %>

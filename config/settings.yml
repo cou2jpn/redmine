@@ -232,3 +232,5 @@ non_working_week_days:
   default:
   - '6'
   - '7'
+account_reg_info:
+  default: ''

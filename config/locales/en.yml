@@ -410,6 +410,7 @@ en:
   setting_mail_handler_excluded_filenames: Exclude attachments by name
   setting_force_default_language_for_anonymous: Force default language for anonymous users
   setting_force_default_language_for_loggedin: Force default language for logged-in users
+  setting_account_reg_info: Email content at user registration
 
   permission_add_project: Create project
   permission_add_subprojects: Create subprojects
