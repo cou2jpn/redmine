@@ -34,7 +34,9 @@
                               :id => nil,
                               :disabled => member.member_roles.detect {
                                  |mr| mr.role_id == role.id && !mr.inherited_from.nil?
-                                 } ) %> <%= role %>
+                                 },
+                              :onclick => "return #{role.available?(User.current)};"
+                              ) %> <%= role %>
           </label><br />
           <% end %>
         </p>
@@ -82,7 +84,7 @@
       <p>
         <%= l(:label_role_plural) %>:
         <% roles.each do |role| %>
-          <label><%= check_box_tag 'membership[role_ids][]', role.id, false, :id => nil %> <%= role %></label>
+          <label><%= check_box_tag 'membership[role_ids][]', role.id, false, :id => nil, :disabled => !role.available?(User.current) %> <%= role %></label>
         <% end %>
       </p>
       <p><%= submit_tag l(:button_add), :id => 'member-add-submit' %></p>

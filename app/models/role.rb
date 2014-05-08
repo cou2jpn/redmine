@@ -64,6 +64,8 @@ class Role < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
   validates_length_of :name, :maximum => 30
+  validates_length_of :aclevel, :maximum => 1
+  validates_numericality_of :aclevel, :only_integer => true
   validates_inclusion_of :issues_visibility,
     :in => ISSUES_VISIBILITY_OPTIONS.collect(&:first),
     :if => lambda {|role| role.respond_to?(:issues_visibility)}
@@ -179,6 +181,10 @@ class Role < ActiveRecord::Base
   # it will be created on the fly.
   def self.anonymous
     find_or_create_system_role(BUILTIN_ANONYMOUS, 'Anonymous')
+  end
+
+  def available?(user)
+    user.admin? || self.aclevel <= user.aclevel
   end
 
 private
