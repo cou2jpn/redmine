@@ -184,6 +184,9 @@ default_projects_modules:
 default_projects_tracker_ids:
   serialized: true
   default: 
+default_projects_role_ids:
+  serialized: true
+  default:
 # Role given to a non-admin user who creates a project
 new_project_user_role_id:
   format: int

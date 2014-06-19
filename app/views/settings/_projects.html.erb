@@ -11,6 +11,9 @@
 
 <p><%= setting_check_box :sequential_project_identifiers %></p>
 
+<p><%= setting_multiselect(:default_projects_role_ids,
+        Role.find_all_givable.collect {|r| [r.name, r.id.to_s]}) %></p>
+
 <p><%= setting_select :new_project_user_role_id,
                       Role.find_all_givable.collect {|r| [r.name, r.id.to_s]},
                       :blank => "--- #{l(:actionview_instancetag_blank_option)} ---" %></p>

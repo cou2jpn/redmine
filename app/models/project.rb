@@ -36,6 +36,7 @@ class Project < ActiveRecord::Base
 
   has_many :enabled_modules, :dependent => :delete_all
   has_and_belongs_to_many :trackers, :order => "#{Tracker.table_name}.position"
+  has_and_belongs_to_many :roles, :order => "#{Role.table_name}.position"
   has_many :issues, :dependent => :destroy, :include => [:status, :tracker]
   has_many :issue_changes, :through => :issues, :source => :journals
   has_many :versions, :dependent => :destroy, :order => "#{Version.table_name}.effective_date DESC, #{Version.table_name}.name DESC"
@@ -132,6 +133,17 @@ class Project < ActiveRecord::Base
       else
         self.trackers = Tracker.sorted.all
       end
+    end
+    if !initialized.key?('roles') && !initialized.key?('role_ids')
+      default = Setting.default_projects_role_ids
+      if default.is_a?(Array)
+        self.roles = Role.where(:id => default.map(&:to_i)).sorted.all
+      else
+        self.roles = Role.find_all_givable
+      end
+    end
+    if !initialized.key?('inherit_members')
+      self.inherit_members = Setting.default_inherit_members?
     end
   end
 
@@ -690,6 +702,7 @@ class Project < ActiveRecord::Base
     'custom_field_values',
     'custom_fields',
     'tracker_ids',
+    'role_ids',
     'issue_custom_field_ids'
 
   safe_attributes 'enabled_module_names',
@@ -754,6 +767,7 @@ class Project < ActiveRecord::Base
     copy = Project.new(attributes)
     copy.enabled_modules = project.enabled_modules
     copy.trackers = project.trackers
+    copy.roles = project.roles
     copy.custom_values = project.custom_values.collect {|v| v.clone}
     copy.issue_custom_fields = project.issue_custom_fields
     copy

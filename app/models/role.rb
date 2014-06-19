@@ -53,6 +53,7 @@ class Role < ActiveRecord::Base
     end
   end
   has_and_belongs_to_many :custom_fields, :join_table => "#{table_name_prefix}custom_fields_roles#{table_name_suffix}", :foreign_key => "role_id"
+  has_and_belongs_to_many :projects
 
   has_many :member_roles, :dependent => :destroy
   has_many :members, :through => :member_roles

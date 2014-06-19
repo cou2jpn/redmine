@@ -1,5 +1,5 @@
 <%= error_messages_for 'member' %>
-<% roles = Role.find_all_givable
+<% roles = @project.roles
    members = @project.member_principals.includes(:member_roles, :roles, :principal).all.sort %>
 
 <div class="splitcontentleft">

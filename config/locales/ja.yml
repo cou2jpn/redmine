@@ -404,6 +404,7 @@ ja:
   setting_commit_logtime_activity_id: 作業時間の作業分類
   setting_gantt_items_limit: ガントチャート最大表示項目数
   setting_default_projects_tracker_ids: 新規プロジェクトにおいてデフォルトで有効になるトラッカー
+  setting_default_projects_role_ids: 新規プロジェクトにおいてデフォルトで有効になるロール
   setting_deny_nonprivs_access_public_project: アクセスレベルの低いユーザーが非メンバーの公開プロジェクトへアクセスできないようにする
   setting_allow_privs_access_secret_project: アクセスレベルの高いユーザーが非メンバーの非公開プロジェクトへアクセスできるようにする
 
@@ -411,6 +412,7 @@ ja:
   permission_add_subprojects: サブプロジェクトの追加
   permission_edit_project: プロジェクトの編集
   permission_select_project_modules: モジュールの選択
+  permission_select_project_roles: ロールの選択
   permission_manage_members: メンバーの管理
   permission_manage_versions: バージョンの管理
   permission_manage_categories: チケットのカテゴリの管理

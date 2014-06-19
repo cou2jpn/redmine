@@ -70,6 +70,7 @@ class ProjectsController < ApplicationController
   def new
     @issue_custom_fields = IssueCustomField.sorted.all
     @trackers = Tracker.sorted.all
+    @roles = Role.find_all_givable
     @project = Project.new
     @project.safe_attributes = params[:project]
   end
@@ -77,6 +78,7 @@ class ProjectsController < ApplicationController
   def create
     @issue_custom_fields = IssueCustomField.sorted.all
     @trackers = Tracker.sorted.all
+    @roles = Role.find_all_givable
     @project = Project.new
     @project.safe_attributes = params[:project]
 
@@ -111,6 +113,7 @@ class ProjectsController < ApplicationController
   def copy
     @issue_custom_fields = IssueCustomField.sorted.all
     @trackers = Tracker.sorted.all
+    @roles = Role.find_all_givable
     @source_project = Project.find(params[:id])
     if request.get?
       @project = Project.copy_from(@source_project)
@@ -171,6 +174,7 @@ class ProjectsController < ApplicationController
     @issue_category ||= IssueCategory.new
     @member ||= @project.members.new
     @trackers = Tracker.sorted.all
+    @roles = Role.find_all_givable
     @wiki ||= @project.wiki
   end
 

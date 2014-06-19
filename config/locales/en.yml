@@ -408,6 +408,7 @@ en:
   setting_non_working_week_days: Non-working days
   setting_jsonp_enabled: Enable JSONP support
   setting_default_projects_tracker_ids: Default trackers for new projects
+  setting_default_projects_role_ids: Default roles for new projects
   setting_mail_handler_excluded_filenames: Exclude attachments by name
   setting_force_default_language_for_anonymous: Force default language for anonymous users
   setting_force_default_language_for_loggedin: Force default language for logged-in users
@@ -419,6 +420,7 @@ en:
   permission_edit_project: Edit project
   permission_close_project: Close / reopen the project
   permission_select_project_modules: Select project modules
+  permission_select_project_roles: Select project roles
   permission_manage_members: Manage members
   permission_manage_project_activities: Manage project activities
   permission_manage_versions: Manage versions
