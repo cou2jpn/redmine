@@ -375,7 +375,7 @@ class Mailer < ActionMailer::Base
             'X-Redmine-Site' => Setting.app_title,
             'X-Auto-Response-Suppress' => 'OOF',
             'Auto-Submitted' => 'auto-generated',
-            'From' => Setting.mail_from,
+            'From' => Setting.mail_from_user_current? ? User.current.try(:mail) || Setting.mail_from : Setting.mail_from,
             'List-Id' => "<#{Setting.mail_from.to_s.gsub('@', '.')}>"
 
     # Removes the author from the recipients and cc
