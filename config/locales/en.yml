@@ -348,6 +348,8 @@ en:
   setting_issues_export_limit: Issues export limit
   setting_mail_from: Default emission email address
   setting_mail_from_user_current: Set emission email address to a user's logging in
+  setting_recipient_watcher: Mail addressing of the watcher in a issue
+  setting_recipient_project_notified: Mail addressing of the project notifier in a issue
   setting_bcc_recipients: Blind carbon copy recipients (bcc)
   setting_plain_text_mail: Plain text mail (no HTML)
   setting_host_name: Host name and path

@@ -6,6 +6,10 @@
 
 <p><%= setting_check_box :mail_from_user_current %></p>
 
+<p><%= setting_select :recipient_watcher, [['to', 'to'], ['cc', 'cc']] %></p>
+
+<p><%= setting_select :recipient_project_notified, [['to', 'to'], ['cc', 'cc']] %></p>
+
 <p><%= setting_check_box :bcc_recipients %></p>
 
 <p><%= setting_check_box :plain_text_mail %></p>

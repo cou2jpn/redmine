@@ -355,6 +355,8 @@ ja:
   setting_issues_export_limit: エクスポートするチケット数の上限
   setting_mail_from: デフォルト送信元メールアドレス
   setting_mail_from_user_current: 送信元メールアドレスをログイン中ユーザーのものにする
+  setting_recipient_watcher: チケットのウォッチャーの宛先
+  setting_recipient_project_notified: チケットのプロジェクト通知設定者の宛先
   setting_bcc_recipients: ブラインドカーボンコピーで受信(bcc)
   setting_plain_text_mail: プレインテキストのみ(HTMLなし)
   setting_host_name: ホスト名

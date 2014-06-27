@@ -47,7 +47,7 @@ class Mailer < ActionMailer::Base
   # Notifies users about a new issue
   def self.deliver_issue_add(issue)
     to = issue.notified_users
-    cc = issue.notified_watchers - to
+    cc = issue.cc_notified_users - to
     issue.each_notification(to + cc) do |users|
       Mailer.issue_add(issue, to & users, cc & users).deliver
     end
@@ -80,7 +80,7 @@ class Mailer < ActionMailer::Base
   def self.deliver_issue_edit(journal)
     issue = journal.journalized.reload
     to = journal.notified_users
-    cc = journal.notified_watchers - to
+    cc = journal.cc_notified_users - to
     journal.each_notification(to + cc) do |users|
       issue.each_notification(users) do |users2|
         Mailer.issue_edit(journal, to & users2, cc & users2).deliver

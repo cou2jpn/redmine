@@ -128,6 +128,14 @@ class Journal < ActiveRecord::Base
     notified
   end
 
+  def cc_notified_users
+    cc = journalized.cc_notified_users
+    if private_notes?
+      cc = cc.select {|user| user.allowed_to?(:view_private_notes, journalized.project)}
+    end
+    cc
+  end
+
   def recipients
     notified_users.map(&:mail)
   end

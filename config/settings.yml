@@ -59,6 +59,10 @@ mail_from:
   default: redmine@example.net
 mail_from_user_current:
   default: 0
+recipient_watcher:
+  default: 'cc'
+recipient_project_notified:
+  default: 'to'
 bcc_recipients:
   default: 1
 plain_text_mail:

@@ -800,12 +800,21 @@ class Issue < ActiveRecord::Base
       notified += (assigned_to_was.is_a?(Group) ? assigned_to_was.users : [assigned_to_was])
     end
     notified = notified.select {|u| u.active? && u.notify_about?(self)}
-
-    notified += project.notified_users
+    notified << User.current
+    notified += notified_watchers if Setting.recipient_watcher == "to"
+    notified += project.notified_users if Setting.recipient_project_notified == "to"
     notified.uniq!
     # Remove users that can not view the issue
     notified.reject! {|user| !visible?(user)}
     notified
+  end
+
+  def cc_notified_users
+    cc = []
+    cc += notified_watchers if Setting.recipient_watcher == "cc"
+    cc += project.notified_users.reject {|user| !visible?(user)} if Setting.recipient_project_notified == "cc"
+    cc.uniq! if Setting.recipient_watcher == "cc" && Setting.recipient_project_notified == "cc"
+    cc
   end
 
   # Returns the email addresses that should be notified
