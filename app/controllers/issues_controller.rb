@@ -432,6 +432,9 @@ class IssuesController < ApplicationController
 
     @priorities = IssuePriority.active
     @allowed_statuses = @issue.new_statuses_allowed_to(User.current, @issue.new_record?)
+    if Setting.issue_private_by_status? && User.current.allowed_to?(:set_own_issues_private, @project)
+      @issue.is_private = @issue.status.is_private
+    end
     @available_watchers = @issue.watcher_users
     if @issue.project.users.count <= 20
       @available_watchers = (@available_watchers + @issue.project.users.sort).uniq
@@ -446,6 +449,9 @@ class IssuesController < ApplicationController
   end
 
   def parse_params_for_bulk_issue_attributes(params)
+    if params[:issue].keys.include?("status_id") && Setting.issue_private_by_status? && User.current.allowed_to?(:set_own_issues_private, @project)
+      params[:issue].store(:is_private, IssueStatus.find_by_id(params[:issue].fetch("status_id")).is_private.to_s)
+    end
     attributes = (params[:issue] || {}).reject {|k,v| v.blank?}
     attributes.keys.each {|k| attributes[k] = '' if attributes[k] == 'none'}
     if custom = attributes[:custom_field_values]

@@ -166,6 +166,8 @@ display_subprojects_issues:
   default: 1
 issue_done_ratio:
   default: 'issue_field'
+issue_private_by_status:
+  default: 0
 default_projects_public:
   default: 1
 default_projects_modules:

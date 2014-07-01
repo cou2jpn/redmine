@@ -7,6 +7,9 @@
 <% end %>
 <p><%= f.check_box :is_closed %></p>
 <p><%= f.check_box :is_default %></p>
+<% if Setting.issue_private_by_status? %>
+<p><%= f.check_box :is_private %></p>
+<% end %>
 
 <%= call_hook(:view_issue_statuses_form, :issue_status => @issue_status) %>
 </div>

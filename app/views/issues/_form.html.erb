@@ -1,9 +1,10 @@
 <%= labelled_fields_for :issue, @issue do |f| %>
 <%= call_hook(:view_issues_form_details_top, { :issue => @issue, :form => f }) %>
 
-<% if @issue.safe_attribute? 'is_private' %>
+<% if @issue.safe_attribute? 'is_private' || Setting.issue_private_by_status? %>
 <p style="float:right; margin-right:1em;">
-  <%= f.check_box :is_private, :no_label => true %><label class="inline" for="issue_is_private" id="issue_is_private_label"><%= l(:field_is_private) %></label>
+  <%= f.check_box :is_private, :no_label => true, :onclick => "return #{!Setting.issue_private_by_status?};" %>
+  <label class="inline" for="issue_is_private" id="issue_is_private_label"><%= l(:field_is_private) %></label>
 </p>
 <% end %>
 
