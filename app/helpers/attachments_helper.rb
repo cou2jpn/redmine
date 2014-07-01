@@ -44,4 +44,18 @@ module AttachmentsHelper
       api.created_on attachment.created_on
     end
   end
+
+  def render_custom_fields(attachment)
+    cf = []
+    attachment.visible_custom_field_values.each do |custom_value|
+      s = content_tag(:span, custom_value.custom_field.name + ": ", :class => 'cf_label')
+      if custom_value.value.blank? || custom_value.to_s.blank?
+        s += link_to(l(:label_none), edit_attachment_path(attachment), :title => l(:button_edit))
+      else
+        s += show_value(custom_value)
+      end
+      cf << s
+    end
+    raw(cf.join(" , "))
+  end
 end

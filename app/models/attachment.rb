@@ -46,6 +46,8 @@ class Attachment < ActiveRecord::Base
                                               :joins => "LEFT JOIN #{Document.table_name} ON #{Attachment.table_name}.container_type='Document' AND #{Document.table_name}.id = #{Attachment.table_name}.container_id " +
                                                         "LEFT JOIN #{Project.table_name} ON #{Document.table_name}.project_id = #{Project.table_name}.id"}
 
+  acts_as_customizable
+
   cattr_accessor :storage_path
   @@storage_path = Redmine::Configuration['attachments_storage_path'] || File.join(Rails.root, "files")
 
@@ -55,12 +57,13 @@ class Attachment < ActiveRecord::Base
   before_save :files_to_final_location
   after_destroy :delete_from_disk
 
-  safe_attributes 'filename', 'description'
+  safe_attributes 'filename', 'description', 'custom_field_values', 'custom_fields'
 
   # Returns an unsaved copy of the attachment
   def copy(attributes=nil)
     copy = self.class.new
     copy.attributes = self.attributes.dup.except("id", "downloads")
+    copy.custom_field_values = self.custom_field_values.inject({}) {|h,v| h[v.custom_field_id] = v.value; h}
     copy.attributes = attributes if attributes
     copy
   end
@@ -299,6 +302,17 @@ class Attachment < ActiveRecord::Base
   def self.move_from_root_to_target_directory
     Attachment.where("disk_directory IS NULL OR disk_directory = ''").find_each do |attachment|
       attachment.move_to_target_directory!
+    end
+  end
+
+  # Overrides Redmine::Acts::Customizable::InstanceMethods#available_custom_fields
+  def available_custom_fields
+    if container.respond_to?(:tracker)
+      CustomField.where("type = '#{self.class.name}CustomField'").sorted.select do |value|
+        value.trackers.include?(container.tracker)
+      end
+    else
+      []
     end
   end
 

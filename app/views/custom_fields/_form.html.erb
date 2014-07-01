@@ -79,6 +79,10 @@ when "IssueCustomField" %>
     <p><%= f.check_box :is_required %></p>
     <p><%= f.check_box :is_filter %></p>
 
+<% when "AttachmentCustomField" %>
+    <p><%= f.check_box :is_required %></p>
+    <p><%= f.check_box :visible %></p>
+
 <% else %>
     <p><%= f.check_box :is_required %></p>
 
@@ -86,7 +90,7 @@ when "IssueCustomField" %>
 <%= call_hook(:"view_custom_fields_form_#{@custom_field.type.to_s.underscore}", :custom_field => @custom_field, :form => f) %>
 </div>
 
-<% if @custom_field.is_a?(IssueCustomField) %>
+<% if @custom_field.is_a?(IssueCustomField) || @custom_field.is_a?(AttachmentCustomField) %>
   <fieldset class="box" id="custom_field_tracker_ids"><legend><%=l(:label_tracker_plural)%></legend>
   <% Tracker.sorted.each do |tracker| %>
     <%= check_box_tag "custom_field[tracker_ids][]",
@@ -100,7 +104,8 @@ when "IssueCustomField" %>
   <%= hidden_field_tag "custom_field[tracker_ids][]", '' %>
   <p><%= check_all_links 'custom_field_tracker_ids' %></p>
   </fieldset>
-
+<% end %>
+<% if @custom_field.is_a?(IssueCustomField) %>
   <fieldset class="box" id="custom_field_project_ids"><legend><%= l(:label_project_plural) %></legend>
     <%= render_project_nested_lists(Project.all) do |p|
       content_tag('label', check_box_tag('custom_field[project_ids][]', p.id, @custom_field.projects.to_a.include?(p), :id => nil) + ' ' + h(p))

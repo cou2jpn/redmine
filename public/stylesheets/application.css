@@ -570,9 +570,25 @@ a.remove-upload:hover {text-decoration:none !important;}
 div.fileover { background-color: lavender; }
 
 div.attachments { margin-top: 12px; }
-div.attachments p { margin:4px 0 2px 0; }
 div.attachments img { vertical-align: middle; }
-div.attachments span.author { font-size: 0.9em; color: #888; }
+div.attachments ul { list-style-type: none; }
+div.attachments li {
+  background: url(../images/attachment.png) no-repeat 0px 3px;
+  border-bottom: 1px solid #e4e4ef;
+  padding-left: 1.5em;
+  padding-top: 2px;
+  padding-bottom: 3px;
+  overflow: hidden;
+}
+div.attachments li.nullified { background: url(../images/bullet_delete.png) no-repeat 0px 3px; }
+div.attachments li:hover { background-color:#ffffdd; }
+div.attachments .attrs {
+  font-size: 0.9em;
+  color: #888;
+  white-space: nowrap;
+  float:right;
+}
+div.attachments .cf_label { font-weight: bold; }
 
 div.thumbnails {margin-top:0.6em;}
 div.thumbnails div {background:#fff;border:2px solid #ddd;display:inline-block;margin-right:2px;}

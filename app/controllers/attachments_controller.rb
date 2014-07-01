@@ -21,7 +21,9 @@ class AttachmentsController < ApplicationController
   before_filter :delete_authorize, :only => [:destroy, :edit, :update]
   before_filter :authorize_global, :only => :upload
 
-  accept_api_auth :show, :download, :upload
+  accept_api_auth :show, :download, :upload, :update
+
+  helper :custom_fields
 
   def show
     respond_to do |format|
@@ -52,7 +54,7 @@ class AttachmentsController < ApplicationController
 
   def update
     @attachment.safe_attributes = params[:attachment]
-    if request.put? and @attachment.save
+    if request.put? && @attachment.save
       flash[:notice] = l(:notice_successful_update)
       case @attachment.try(:container_type)
       when 'Issue', 'News', 'Document'
@@ -63,7 +65,10 @@ class AttachmentsController < ApplicationController
         render :action => 'edit'
       end
     else
-      render :action => 'edit'
+      respond_to do |format|
+        format.html { render :action => 'edit' }
+        format.api  { render_validation_errors(@attachment) }
+      end
     end
   end
 

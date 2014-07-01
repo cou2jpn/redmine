@@ -32,6 +32,8 @@ module CustomFieldsHelper
      :label => :label_user_plural},
     {:name => 'GroupCustomField', :partial => 'custom_fields/index',
      :label => :label_group_plural},
+    {:name => 'AttachmentCustomField', :partial => 'custom_fields/index',
+     :label => :label_attachment_plural},
     {:name => 'TimeEntryActivityCustomField', :partial => 'custom_fields/index',
      :label => TimeEntryActivity::OptionName},
     {:name => 'IssuePriorityCustomField', :partial => 'custom_fields/index',

@@ -1,46 +1,57 @@
 <div class="attachments">
+<ul>
 <% for attachment in attachments %>
-<p>
 <% if attachment.is_nullified? -%>
-  <%= content_tag 'span', attachment.filename.html_safe, :class => 'icon icon-nullified', :title => l(:label_disabled) -%>
+  <li class="nullified" title=<%= l(:label_disabled)%>><%= attachment.filename.html_safe -%>
 <% else -%>
-  <%= link_to_attachment attachment, :class => 'icon icon-attachment', :download => true -%>
+  <li> <%= link_to_attachment attachment, :download => true, :title => "MD5: #{attachment.digest}" -%>
   <% if attachment.is_text? %>
     <%= link_to image_tag('magnifier.png'),
                 :controller => 'attachments', :action => 'show',
                 :id => attachment, :filename => attachment.filename %>
   <% end %>
 <% end -%>
-  <%= h(" - #{attachment.description}") unless attachment.description.blank? %>
+  <span class="attrs">
+  <span class="md5">MD5: <%= attachment.digest %></span>
   <span class="size">(<%= number_to_human_size attachment.filesize %>)</span>
+  <% if options[:author] %>
+    <span class="author"><%= h(attachment.author) %>, <%= format_time(attachment.created_on) %></span>
+  <% end %>
   <% if options[:deletable] %>
+    <span class="menu">
     <%= link_to image_tag('edit.png'), edit_attachment_path(attachment),
                                        :class => 'icon-edit',
-                                       :title => l(:button_edit) %>
+                                       :title => l(:button_edit) -%>
     <% if attachment.is_nullified? -%>
       <%= link_to image_tag('unlock.png'), toggle_nullify_attachment_path(attachment),
                                            :data => {:confirm => l(:text_are_you_sure)},
                                            :method => :post,
                                            :class => 'icon-unlock',
-                                           :title => l(:button_activate) %>
+                                           :title => l(:button_activate) -%>
     <% else -%>
       <%= link_to image_tag('locked.png'), toggle_nullify_attachment_path(attachment),
                                            :data => {:confirm => l(:text_are_you_sure)},
                                            :method => :post,
                                            :class => 'icon-lock',
-                                           :title => l(:button_nullify) %>
+                                           :title => l(:button_nullify) -%>
     <% end -%>
     <%= link_to image_tag('delete.png'), attachment_path(attachment),
                                          :data => {:confirm => l(:text_are_you_sure)},
                                          :method => :delete,
                                          :class => 'delete',
-                                         :title => l(:button_delete) %>
+                                         :title => l(:button_delete) -%>
+    </span>
   <% end %>
-  <% if options[:author] %>
-    <span class="author"><%= h(attachment.author) %>, <%= format_time(attachment.created_on) %></span>
-  <% end %>
-  </p>
+  </span>
+  <%= content_tag(:div, "- " + attachment.description, :class => :description) unless attachment.description.blank? %>
+<% if attachment.visible_custom_field_values.any? %>
+  <div class="custom_fields">
+  <%= render_custom_fields(attachment) %>
+  </div>
 <% end %>
+</li>
+<% end %>
+</ul>
 <% if defined?(thumbnails) && thumbnails %>
   <% images = attachments.select(&:thumbnailable?) %>
   <% if images.any? %>
