@@ -136,6 +136,11 @@ class Attachment < ActiveRecord::Base
     end
   end
 
+  def toggle_nullify
+    self.is_nullified? ? self.is_nullified = false : self.is_nullified = true
+    save!
+  end
+
   # Returns file's location on disk
   def diskfile
     File.join(self.class.storage_path, disk_directory.to_s, disk_filename.to_s)
@@ -159,7 +164,7 @@ class Attachment < ActiveRecord::Base
 
   def visible?(user=User.current)
     if container_id
-      container && container.attachments_visible?(user)
+      container && container.attachments_visible?(user) && !self.is_nullified?
     else
       author == user
     end

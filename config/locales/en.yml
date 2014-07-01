@@ -939,6 +939,7 @@ en:
   button_back: Back
   button_cancel: Cancel
   button_activate: Activate
+  button_nullify: Nullify
   button_sort: Sort
   button_log_time: Log time
   button_rollback: Rollback to this version
@@ -991,6 +992,8 @@ en:
   text_journal_set_to: "%{label} set to %{value}"
   text_journal_deleted: "%{label} deleted (%{old})"
   text_journal_added: "%{label} %{value} added"
+  text_journal_nullified: "%{label} nullified (%{old})"
+  text_journal_reactivated: "%{label} reactivated (%{old})"
   text_tip_issue_begin_day: issue beginning this day
   text_tip_issue_end_day: issue ending this day
   text_tip_issue_begin_end_day: issue beginning and ending this day

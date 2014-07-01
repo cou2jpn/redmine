@@ -116,6 +116,24 @@ class AttachmentsController < ApplicationController
     end
   end
 
+  def toggle_nullify
+    ActiveRecord::Base.transaction do
+      if @attachment.container.respond_to?(:init_journal)
+        @attachment.container.init_journal(User.current)
+        @attachment.container.attachment_updated(@attachment)
+      end
+      @attachment.toggle_nullify
+    end
+
+    respond_to do |format|
+      format.html { redirect_to_referer_or project_path(@project) }
+      format.js
+    end
+
+    rescue => e
+    render :text => e.message
+  end
+
 private
   def find_project
     @attachment = Attachment.find(params[:id])

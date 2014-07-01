@@ -993,6 +993,7 @@ a.close-icon:hover {background-image:url('../images/close_hl.png');}
 .icon-projects { background-image: url(../images/projects.png); }
 .icon-help { background-image: url(../images/help.png); }
 .icon-attachment  { background-image: url(../images/attachment.png); }
+.icon-nullified  { background-image: url(../images/bullet_delete.png); }
 .icon-history  { background-image: url(../images/history.png); }
 .icon-time  { background-image: url(../images/time.png); }
 .icon-time-add  { background-image: url(../images/time_add.png); }

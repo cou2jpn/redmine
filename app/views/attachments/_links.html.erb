@@ -1,14 +1,32 @@
 <div class="attachments">
 <% for attachment in attachments %>
-<p><%= link_to_attachment attachment, :class => 'icon icon-attachment', :download => true -%>
+<p>
+<% if attachment.is_nullified? -%>
+  <%= content_tag 'span', attachment.filename.html_safe, :class => 'icon icon-nullified', :title => l(:label_disabled) -%>
+<% else -%>
+  <%= link_to_attachment attachment, :class => 'icon icon-attachment', :download => true -%>
   <% if attachment.is_text? %>
     <%= link_to image_tag('magnifier.png'),
                 :controller => 'attachments', :action => 'show',
                 :id => attachment, :filename => attachment.filename %>
   <% end %>
+<% end -%>
   <%= h(" - #{attachment.description}") unless attachment.description.blank? %>
   <span class="size">(<%= number_to_human_size attachment.filesize %>)</span>
   <% if options[:deletable] %>
+    <% if attachment.is_nullified? -%>
+      <%= link_to image_tag('unlock.png'), toggle_nullify_attachment_path(attachment),
+                                           :data => {:confirm => l(:text_are_you_sure)},
+                                           :method => :post,
+                                           :class => 'icon-unlock',
+                                           :title => l(:button_activate) %>
+    <% else -%>
+      <%= link_to image_tag('locked.png'), toggle_nullify_attachment_path(attachment),
+                                           :data => {:confirm => l(:text_are_you_sure)},
+                                           :method => :post,
+                                           :class => 'icon-lock',
+                                           :title => l(:button_nullify) %>
+    <% end -%>
     <%= link_to image_tag('delete.png'), attachment_path(attachment),
                                          :data => {:confirm => l(:text_are_you_sure)},
                                          :method => :delete,

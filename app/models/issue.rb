@@ -646,6 +646,14 @@ class Issue < ActiveRecord::Base
     @current_journal
   end
 
+  def attachment_updated(obj)
+    if @current_journal && !obj.new_record?
+      value = obj.is_nullified? ? 'reactivated' : 'nullified'
+      @current_journal.details << JournalDetail.new(:property => 'attachment', :prop_key => obj.id, :old_value => obj.filename, :value => value)
+      @current_journal.save!
+    end
+  end
+
   # Returns the id of the last journal or nil
   def last_journal_id
     if new_record?

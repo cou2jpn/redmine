@@ -864,6 +864,7 @@ ja:
   button_back: 戻る
   button_cancel: キャンセル
   button_activate: 有効にする
+  button_nullify: 無効にする
   button_sort: ソート
   button_log_time: 時間を記録
   button_rollback: このバージョンにロールバック
@@ -906,6 +907,8 @@ ja:
   text_journal_set_to: "%{label} を %{value} にセット"
   text_journal_deleted: "%{label} を削除 (%{old})"
   text_journal_added: "%{label} %{value} を追加"
+  text_journal_nullified: "%{label} を廃止 (%{old})"
+  text_journal_reactivated: "%{label} を再開 (%{old})"
   text_tip_issue_begin_day: この日に開始するチケット
   text_tip_issue_end_day: この日に終了するチケット
   text_tip_issue_begin_end_day: この日に開始・終了するチケット

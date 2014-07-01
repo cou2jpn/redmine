@@ -392,7 +392,13 @@ module IssuesHelper
           l(:text_journal_set_to, :label => label, :value => value).html_safe
         end
       when 'attachment', 'relation'
-        l(:text_journal_added, :label => label, :value => value).html_safe
+        if detail.value == 'nullified'
+          l(:text_journal_nullified, :label => label, :old => old_value).html_safe
+        elsif detail.value == 'reactivated'
+          l(:text_journal_reactivated, :label => label, :old => old_value).html_safe
+        else
+          l(:text_journal_added, :label => label, :value => value).html_safe
+        end
       end
     else
       l(:text_journal_deleted, :label => label, :old => old_value).html_safe

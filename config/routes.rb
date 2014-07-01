@@ -274,6 +274,7 @@ RedmineApp::Application.routes.draw do
   get 'attachments/download/:id', :to => 'attachments#download', :id => /\d+/
   get 'attachments/thumbnail/:id(/:size)', :to => 'attachments#thumbnail', :id => /\d+/, :size => /\d+/, :as => 'thumbnail'
   resources :attachments, :only => [:show, :destroy]
+  post 'attachments/toggle_nullify/:id', :to => 'attachments#toggle_nullify', :as => 'toggle_nullify_attachment'
 
   resources :groups do
     member do
