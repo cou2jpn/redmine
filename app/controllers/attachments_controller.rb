@@ -18,7 +18,7 @@
 class AttachmentsController < ApplicationController
   before_filter :find_project, :except => :upload
   before_filter :file_readable, :read_authorize, :only => [:show, :download, :thumbnail]
-  before_filter :delete_authorize, :only => :destroy
+  before_filter :delete_authorize, :only => [:destroy, :edit, :update]
   before_filter :authorize_global, :only => :upload
 
   accept_api_auth :show, :download, :upload
@@ -44,6 +44,26 @@ class AttachmentsController < ApplicationController
         end
       }
       format.api
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    @attachment.safe_attributes = params[:attachment]
+    if request.put? and @attachment.save
+      flash[:notice] = l(:notice_successful_update)
+      case @attachment.try(:container_type)
+      when 'Issue', 'News', 'Document'
+        redirect_to @attachment.container
+      when 'WikiPage'
+        redirect_to :controller => 'wiki', :action => 'show', :project_id => @project, :id => @attachment.container.title
+      else
+        render :action => 'edit'
+      end
+    else
+      render :action => 'edit'
     end
   end
 

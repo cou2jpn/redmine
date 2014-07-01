@@ -14,6 +14,9 @@
   <%= h(" - #{attachment.description}") unless attachment.description.blank? %>
   <span class="size">(<%= number_to_human_size attachment.filesize %>)</span>
   <% if options[:deletable] %>
+    <%= link_to image_tag('edit.png'), edit_attachment_path(attachment),
+                                       :class => 'icon-edit',
+                                       :title => l(:button_edit) %>
     <% if attachment.is_nullified? -%>
       <%= link_to image_tag('unlock.png'), toggle_nullify_attachment_path(attachment),
                                            :data => {:confirm => l(:text_are_you_sure)},

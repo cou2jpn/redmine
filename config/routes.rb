@@ -269,11 +269,12 @@ RedmineApp::Application.routes.draw do
   get 'projects/:id/repository', :to => 'repositories#show', :path => nil
 
   # additional routes for having the file name at the end of url
+  get 'attachments/:id/edit', :to => 'attachments#edit'
   get 'attachments/:id/:filename', :to => 'attachments#show', :id => /\d+/, :filename => /.*/, :as => 'named_attachment'
   get 'attachments/download/:id/:filename', :to => 'attachments#download', :id => /\d+/, :filename => /.*/, :as => 'download_named_attachment'
   get 'attachments/download/:id', :to => 'attachments#download', :id => /\d+/
   get 'attachments/thumbnail/:id(/:size)', :to => 'attachments#thumbnail', :id => /\d+/, :size => /\d+/, :as => 'thumbnail'
-  resources :attachments, :only => [:show, :destroy]
+  resources :attachments, :only => [:show, :destroy, :edit, :update]
   post 'attachments/toggle_nullify/:id', :to => 'attachments#toggle_nullify', :as => 'toggle_nullify_attachment'
 
   resources :groups do

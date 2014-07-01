@@ -1,0 +1,13 @@
+<h2><%=l(:label_attachment)%></h2>
+
+<%= labelled_form_for @attachment do |f| %>
+
+  <div class="box tabular">
+  <p><%= f.text_field :filename %></p>
+  <p><%= f.text_field :description %></p>
+  </div>
+
+  <p><%= submit_tag l(:button_save) %>
+  <%= link_to l(:button_cancel), url_for(@attachment.container) %> </p>
+<% end %>
+
