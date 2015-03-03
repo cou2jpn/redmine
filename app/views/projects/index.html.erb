@@ -3,20 +3,50 @@
 <% end %>
 
 <div class="contextual">
-  <%= form_tag({}, :method => :get) do %>
-    <label for="closed">
-      <%= check_box_tag 'closed', 1, params[:closed], :onchange => "this.form.submit();" %>
-      <%= l(:label_show_closed_projects) %>
-    </label>
-  <% end %>
   <%= render_project_action_links %>
 </div>
 
 <h2><%= l(:label_project_plural) %></h2>
 
-<div id="projects-index">
-<%= render_project_hierarchy(@projects) %>
+<%= form_tag({}, :method => :get) do %>
+<fieldset><legend><%= l(:label_filter_plural) %></legend>
+<label for='status'><%= l(:field_status) %> :</label>
+<%= select_tag 'status', project_status_options_for_select(@status), :class => "small", :onchange => "this.form.submit(); return false;"  %>
+<label for='name'><%= l(:label_project) %>:</label>
+<%= text_field_tag 'name', params[:name], :size => 30 %>
+<%= submit_tag l(:button_apply), :class => "small", :name => nil %>
+<%= link_to l(:button_clear), {:controller => 'projects', :action => 'index'}, :class => 'icon icon-reload' %>
+</fieldset>
+<% end %>
+&nbsp;
+
+<% if @projects.any? %>
+<div class="autoscroll">
+<table class="list">
+  <thead><tr>
+  <th><%=l(:label_project)%></th>
+  <th><%=l(:field_description)%></th>
+  <th><%=l(:field_is_public)%></th>
+  <th><%=l(:field_created_on)%></th>
+  <th><%=l(:field_status)%></th>
+  </tr></thead>
+  <tbody>
+<% project_tree(@projects) do |project, level| %>
+  <tr class="<%= project.css_classes %> <%= level > 0 ? "idnt idnt-#{level}" : nil %>">
+  <td class="name"><span><%= link_to_project(project, {}, :class => "#{project.css_classes} #{User.current.member_of?(project) ? 'icon icon-fav my-project' : nil}") %></td>
+  <td class="name"><%= textilizable project.short_description(1), :project => project %></td>
+  <td><%= checked_image project.is_public? %></td>
+  <td><%= format_date(project.created_on) %></td>
+  <td><%= project.status == Project::STATUS_ACTIVE ? l(:project_status_active) : l(:project_status_closed) %></td>
+  </tr>
+<% end %>
+  </tbody>
+</table>
 </div>
+<span class="pagination"><%= pagination_links_full @project_pages, @project_count %></span>
+<% else %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
 
 <% if User.current.logged? %>
 <p style="text-align:right;">

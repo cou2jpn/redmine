@@ -45,10 +45,12 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       format.html {
-        unless params[:closed]
-          scope = scope.active
-        end
-        @projects = scope.to_a
+        @status = params[:status] || 1
+        scope = Project.status(@status).order('lft')
+        scope = scope.like(params[:name]) if params[:name].present?
+        @project_count = scope.count
+        @project_pages = Paginator.new @project_count, per_page_option, params['page']
+        @projects = scope.limit(@project_pages.per_page).offset(@project_pages.offset).to_a
       }
       format.api  {
         @offset, @limit = api_offset_and_limit

@@ -55,15 +55,11 @@ module ProjectsHelper
     links
   end
 
-  # Renders the projects index
-  def render_project_hierarchy(projects)
-    render_project_nested_lists(projects) do |project|
-      s = link_to_project(project, {}, :class => "#{project.css_classes} #{User.current.member_of?(project) ? 'icon icon-fav my-project' : nil}")
-      if project.description.present?
-        s << content_tag('div', textilizable(project.short_description, :project => project), :class => 'wiki description')
-      end
-      s
-    end
+  # Renders the projects filtering box for the projects index.
+  def project_status_options_for_select(selected)
+    options_for_select([[l(:label_all), ''],
+                        [l(:project_status_active), '1'],
+                        [l(:project_status_closed), '5']], selected.to_s)
   end
 
   # Returns a set of options for a select field, grouped by project.
