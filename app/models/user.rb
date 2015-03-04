@@ -237,6 +237,7 @@ class User < Principal
         user.login = login
         user.language = Setting.default_language
         if user.save
+          Mailer.account_information(user, password).deliver
           user.reload
           logger.info("User '#{user.login}' created from external auth source: #{user.auth_source.type} - #{user.auth_source.name}") if logger && user.auth_source
         end

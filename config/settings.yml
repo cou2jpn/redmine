@@ -290,3 +290,5 @@ new_item_menu_tab:
 timelog_required_fields:
   serialized: true
   default: []
+account_reg_info:
+  default: ''

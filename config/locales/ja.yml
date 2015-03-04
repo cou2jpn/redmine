@@ -223,7 +223,7 @@ ja:
   mail_body_lost_password: 'パスワードを変更するには、以下のリンクをクリックしてください:'
   mail_subject_register: "%{value} アカウント登録の確認"
   mail_body_register: 'アカウント登録を完了するには、以下のアドレスをクリックしてください:'
-  mail_body_account_information_external: "%{value} アカウントを使ってにログインできます。"
+  mail_body_account_information_external: "%{value} アカウントを使ってログインしてください。"
   mail_body_account_information: アカウント情報
   mail_subject_account_activation_request: "%{value} アカウントの承認要求"
   mail_body_account_activation_request: "新しいユーザー %{value} が登録されました。このアカウントはあなたの承認待ちです："
@@ -398,6 +398,7 @@ ja:
   setting_commit_logtime_activity_id: 作業時間の作業分類
   setting_gantt_items_limit: ガントチャート最大表示件数
   setting_default_projects_tracker_ids: 新規プロジェクトにおいてデフォルトで有効になるトラッカー
+  setting_account_reg_info: ユーザー登録時のメール内容
 
   permission_add_project: プロジェクトの追加
   permission_add_subprojects: サブプロジェクトの追加

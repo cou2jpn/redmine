@@ -1,3 +1,5 @@
+<%= l(:mail_subject_register, Setting.app_title) %>
+
 <% if @user.auth_source %>
 <p><%= l(:mail_body_account_information_external, h(@user.auth_source.name)) %></p>
 <% else %>
@@ -11,3 +13,4 @@
 <% end %>
 
 <p><%= l(:label_login) %>: <%= link_to @login_url, @login_url %></p>
+<%= textilizable(Setting.account_reg_info) %>

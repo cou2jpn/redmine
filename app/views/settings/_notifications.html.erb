@@ -29,6 +29,10 @@
 <%= setting_text_area :emails_footer, :label => false, :class => 'wiki-edit', :rows => 5 %>
 </fieldset>
 
+<fieldset class="box"><legend><%= l(:setting_account_reg_info) %></legend>
+<%= setting_text_area :account_reg_info,:label => false, :class => 'wiki-edit', :rows => 5 %>
+</fieldset>
+
 <div style="float:right;">
 <%= link_to l(:label_send_test_email), test_email_path, :method => :post %>
 </div>
